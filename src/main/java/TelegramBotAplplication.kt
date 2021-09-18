@@ -21,6 +21,7 @@ fun main() {
 class Bot : TelegramLongPollingBot() {
 
 
+
     override fun getBotUsername() = "t.me/JobGazpromNeftBot"
 
     override fun getBotToken()  = "2037431443:AAFQ_7p6gTYgjqJU4E8P4Zo0Ozgd-5wgEo8"
@@ -28,39 +29,12 @@ class Bot : TelegramLongPollingBot() {
 
     override fun onUpdateReceived(update: Update) {
         if (update.hasMessage()) {
-            if (update.message.text == "/start") {
-                val keyboard = ReplyKeyboardMarkup();
-                keyboard.keyboard = listOf(
-                    KeyboardRow().apply {
-                        add(KeyboardButton("Все вакансии"))
-                    },
-                    KeyboardRow().apply {
-                        add(KeyboardButton("фильтр по городам"))
-                    },
-                    KeyboardRow().apply {
-                        add(KeyboardButton("фильтр по рабочему направлению"))
-                    })
-                execute(SendMessage().setReplyMarkup(keyboard)
-                    .setText("Привет")
-                    .setChatId(update.message.chatId))
-            }
+            startMenu(update)
+            findToSitys(update)
 
 
 
-            if (update.message.text == "фильтр по городам") {
-                execute(SendMessage()
-                    .setText("Выберите город:")
-                    .setChatId(update.message.chatId)
-                    .setReplyMarkup(InlineKeyboardMarkup().apply {
-                        keyboard = listOf(
-                            listOf(
-                                InlineKeyboardButton("Москва").apply { callbackData = "Moscow" },
-                                InlineKeyboardButton("Ноябрьск").apply { callbackData = "Moscow" }),
-                        )
-                    }
-                    )
-                )
-            }
+
         }
             if (update.hasCallbackQuery()){
                 if (update.callbackQuery.data == "Moscow") {
@@ -70,6 +44,46 @@ class Bot : TelegramLongPollingBot() {
                     )}
             }
         }
+
+
+
+
+    fun startMenu(update : Update){
+
+        if (update.message.text == "/start") {
+            val button = Button()
+            button.startbutton(update)
+            execute(SendMessage().setReplyMarkup(button.keyboard)
+                .setText("Все показаные вакансии являются внутреними")
+                .setChatId(update.message.chatId))
+        }
+    }
+
+    fun findToSitys (update : Update){
+        if (update.message.text == "фильтр по городам") {
+            execute(SendMessage()
+                .setText("Выберите город:")
+                .setChatId(update.message.chatId)
+                .setReplyMarkup(InlineKeyboardMarkup().apply {
+                    keyboard = listOf(
+                        listOf(
+                            InlineKeyboardButton("Москва").apply { callbackData = "Moscow" },
+                            InlineKeyboardButton("Ноябрьск").apply { callbackData = "Moscow" }),
+                    )
+                }
+                )
+            )
+        }
+    }
+
+    fun findToSity (update : Update){
+        if (update.message.text == "x") {
+
+        }
+    }
+
+
+
 }
 
 

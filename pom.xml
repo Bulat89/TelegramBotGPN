@@ -12,7 +12,10 @@
         <kotlin.version>1.5.30</kotlin.version>
     </properties>
 
+
+
     <dependencies>
+
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
